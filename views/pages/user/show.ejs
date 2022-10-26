@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User</title>
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body>
+  <%- include('../components/navbar') %>
+    <a href="/users">Kembali</a>
+
+    <h1>Detail User</h1>
+    <ul>
+      <li>Nama: <strong>
+          <%= user[0].name %>
+        </strong></li>
+      <li>Email: <strong>
+          <%= user[0].email %>
+        </strong></li>
+    </ul>
+
+    <footer>
+      <p>&copy; 2022 hafiz.expressjs</p>
+    </footer>
+</body>
+
+</html>
