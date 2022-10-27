@@ -12,12 +12,16 @@
 <body>
   <%- include('../components/navbar.ejs') %>
     <a href="/users/create">Register</a>
-    <h1>Daftar Pengguna (<%=users.length%>)</h1>
+    <h1>Daftar Pengguna (<%=users.length %>)</h1>
+    <form action="/users/">
+      <input type="text" name="keyword">
+      <button type="submit">Cari</button>
+    </form>
     <ul>
       <% if(users.length> 0) { %>
         <% users.forEach((user)=> { %>
           <li>
-            <a href="/users/<%=user.id%>">
+            <a href="/users/<%=user._id %>">
               <%= user.name.toUpperCase() %>
             </a>
           </li>

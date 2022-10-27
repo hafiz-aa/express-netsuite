@@ -1,23 +1,50 @@
 const { v4: uuidv4 } = require("uuid");
 const User = require("../models/user");
 
-let users = [
-  { id: 1, name: "Hafiz", email: "hafiz@mail.com" },
-  { id: 2, name: "Aziz", email: "aziz@mail.com" },
-];
+// let users = [
+//   { id: 1, name: "Hafiz", email: "hafiz@mail.com" },
+//   { id: 2, name: "Aziz", email: "aziz@mail.com" },
+// ];
 
 module.exports = {
   index: (req, res) => {
-    res.render("pages/user/index", { users });
+    let keyword = {};
+
+    if (req.query.keyword) {
+      keyword = { name: { $regex: req.query.keyword } };
+    }
+    // Cara pertama
+    /* User.find(keyword, "name _id", (err, users) => {
+      if (err) console.log(err);
+
+      console.log(users);
+      res.render("pages/user/index", { users });
+    }); */
+
+    // Cara kedua
+    const query = User.find(keyword);
+    query.select("name _id");
+    query.exec((err, users) => {
+      if (err) console.log(err);
+
+      console.log(users);
+      res.render("pages/user/index", { users });
+    });
   },
   show: (req, res) => {
     //res.send(req.params.id);
     const id = req.params.id;
-    const data = users.filter((user) => {
-      return user.id == id;
+    // const data = users.filter((user) => {
+    //   return user.id == id;
+    // });
+
+    User.findById(id, (err, data) => {
+      if (err) console.log(err);
+
+      console.log(data);
+      res.render("pages/user/show", { user: data });
     });
     //res.send(data);
-    res.render("pages/user/show", { user: data });
   },
   create: (req, res) => {
     res.render("pages/user/create");
