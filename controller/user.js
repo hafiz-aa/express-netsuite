@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
+const User = require("../models/user");
 
 let users = [
   { id: 1, name: "Hafiz", email: "hafiz@mail.com" },
@@ -22,13 +23,41 @@ module.exports = {
     res.render("pages/user/create");
   },
   store: (req, res) => {
-    users.push({
-      id: uuidv4(),
+    // Cara pertama
+    /*  const user = new User({
       name: req.body.name,
       email: req.body.email,
+      password: req.body.password,
     });
+
+    user.save((err, data) => {
+      if (err) console.log(err);
+
+      console.log(data);
+      res.redirect("/users");
+    }); */
+
+    // Cara kedua
+    User.create(
+      {
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password,
+      },
+      (err, data) => {
+        if (err) console.log(err);
+
+        console.log(data);
+        res.redirect("/users");
+      }
+    );
+
+    // users.push({
+    //   id: uuidv4(),
+    //   name: req.body.name,
+    //   email: req.body.email,
+    // });
     //console.log(users);
-    res.redirect("/users");
   },
   update: (req, res) => {
     const id = req.params.id;

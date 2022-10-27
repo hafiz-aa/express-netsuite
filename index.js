@@ -11,6 +11,9 @@ var myLogger = (req, res, next) => {
   next();
 };
 
+var mongoose = require("mongoose");
+mongoose.connect("mongodb://localhost/baledemia");
+
 app.use(myLogger);
 app.use("/assets", express.static("public"));
 
